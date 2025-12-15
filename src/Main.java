@@ -4,6 +4,8 @@ public class Main {
     public static void main(String[] args) {
         Generator generator = new Generator();
         ArrayList<String> data = generator.createFile();
-
+        for (int x = 0; x < data.size(); x++){
+            String currentInstruction = data.get(x);
+        }
     }
 }
