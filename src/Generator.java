@@ -3,16 +3,36 @@ import java.util.Objects;
 
 public class Generator {
     public ArrayList<String> createFile(){
-        int length = randomNum(5,10);
-        int height = randomNum(100,200);
-        System.out.println("The length is " + length);
+        int length = randomNum(4,4);
+        int height = randomNum(1,1);
+
+        String firstInst = "";
+        int ranIndx = randomNum(0,length);
+        for (int i = 0; i < length; i++){
+            if (i == ranIndx){
+                firstInst+= "0";
+            }else{
+                firstInst += "1";
+            }
+        }
+
         ArrayList<String> tempFile = new ArrayList<>();
+        tempFile.addFirst(firstInst);
         for (int x = 0; x < height; x++){
             tempFile.add(randomSequence(length));
         }
-        for (String s : tempFile){
-            System.out.println(s);
+
+        firstInst = "";
+        ranIndx = randomNum(0,length);
+        for (int i = 0; i < length; i++){
+            if (i == ranIndx){
+                firstInst+= "2";
+            }else{
+                firstInst += "1";
+            }
         }
+
+        tempFile.add(firstInst);
         return tempFile;
     }
 
