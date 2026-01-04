@@ -1,39 +1,46 @@
-import java.util.ArrayList;//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.util.ArrayList;
+
 public class Main {
     public static void main(String[] args) {
         Generator generator = new Generator();
         ArrayList<String> data = generator.createFile();
-
-        int startIndex = data.getFirst().indexOf("0");
-        System.out.println(data.getFirst());
-        for (int x = 1; x < data.size(); x++){
-            String currentInstruction = data.get(x);
-            System.out.println(currentInstruction);
-            System.out.println(checkRight(startIndex,currentInstruction));
+        for (String s: data){
+            System.out.println(s);
         }
+        int rows = data.size();
+        int characters = data.get(0).length();
 
-    }
-    public static int checkRight(int indx,String currentInst){
-        int movements = 0;
-        int length = currentInst.length();
-        for (int j = indx+1; j < length ; j++){
-            if (currentInst.charAt(j) == '0'){
+        int currentIndex = data.get(0).indexOf('0'); //starting index since only one zero
+        int moves = 0;
+
+        for (int r = 1; r < rows; r++) {
+            String row = data.get(r);
+            int bestMove = Integer.MAX_VALUE;
+            int bestIndex = currentIndex;
+
+            for (int c = 0; c < characters; c++) {
+                char character = row.charAt(c);
+                if (character == '0' || character == '2') { // when you find a 0 (or 2) need to check the min amount of movements normally and wrapping around
+
+                    int directPath = Math.abs(c - currentIndex); // I was being stupid and at first making a checkleft and checkright like for a advent problem and then realized I could just subtract and use absolute value
+                    int wrapPath = characters - directPath;
+                    int minDistance = Math.min(directPath, wrapPath);
+
+                    if (minDistance < bestMove) {
+                        bestMove = minDistance;
+                        bestIndex = c;
+                    }
+                }
+            }
+
+            moves += bestMove;
+            currentIndex = bestIndex;
+
+            if (row.charAt(currentIndex) == '2') {
                 break;
             }
-            movements++;
         }
-        System.out.println("MOVEMENT IS " + movements);
-        int newMovement = length-indx;
-        for (int j = 0; j < length;j++){
-            newMovement ++;
-            if (currentInst.charAt(j) == '0'){
-                newMovement--;
-                break;
-            }
-        }
-        System.out.println("TRUMAN WATCHES " +newMovement);
-        return Math.min(movements,newMovement);
-    }
 
+        System.out.println("Minimum moves: " + moves);
+    }
 }

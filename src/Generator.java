@@ -3,11 +3,11 @@ import java.util.Objects;
 
 public class Generator {
     public ArrayList<String> createFile(){
-        int length = randomNum(4,4);
-        int height = randomNum(1,1);
-
-        String firstInst = "";
-        int ranIndx = randomNum(0,length);
+        int length = randomNum(10,20);
+        int height = randomNum(10,20);
+        //changed problem to have only 1 zero / two per line since having multiple zeros was a lot harder and was the same as a advent problem I couldn't solve (also its just hard in general)
+        String firstInst = ""; //this was when I still had multiple zeros for the other lines before, so I could just reuse randomsequence now but i dont feel like it
+        int ranIndx = randomNum(0,length-1);
         for (int i = 0; i < length; i++){
             if (i == ranIndx){
                 firstInst+= "0";
@@ -23,7 +23,7 @@ public class Generator {
         }
 
         firstInst = "";
-        ranIndx = randomNum(0,length);
+        ranIndx = randomNum(0,length-1);
         for (int i = 0; i < length; i++){
             if (i == ranIndx){
                 firstInst+= "2";
@@ -39,15 +39,14 @@ public class Generator {
     public int randomNum(int min, int max){
         return (int) (Math.random() * ((max-min) + 1) + min);
     }
+
     public String randomSequence(int length){
         String currentLine = "";
         for (int j = 0;j < length;j++){
-            currentLine += Objects.toString(randomNum(0,1));
+            currentLine += "1";
         }
-        if (!currentLine.contains("0")){
             int randomNum = randomNum(0,length-1);
             currentLine = currentLine.substring(0,randomNum) + "0" + currentLine.substring(randomNum+1);
-        }
         return currentLine;
     }
 }
