@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Generator {
+public static class Generator {
     public ArrayList<String> createFile(){
-        int length = randomNum(10,10);
-        int height = randomNum(2,4);
+        int length = randomNum(50,100);
+        int height = randomNum(50,100);
         //changed problem to have only 1 zero / two per line since having multiple zeros was a lot harder and was the same as a advent problem I couldn't solve (also its just hard in general)
         String firstInst = "";
         int ranIndx = randomNum(0,length-1);
@@ -48,5 +48,14 @@ public class Generator {
             int randomNum = randomNum(0,length-1);
             currentLine = currentLine.substring(0,randomNum) + "0" + currentLine.substring(randomNum+1);
         return currentLine;
+    }
+}
+
+public static void main(String[] args) {
+    Generator generator = new Generator();
+    ArrayList<String> data = generator.createFile();
+    for (String s: data)
+    {
+        System.out.println(s);
     }
 }
